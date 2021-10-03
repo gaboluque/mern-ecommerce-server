@@ -8,9 +8,9 @@ export interface LooseObject {
   [key: string]: any;
 }
 export interface IPaginationObj {
-  sort: LooseObject;
-  page: number;
-  limit: number;
+  sort?: LooseObject;
+  page?: number;
+  limit?: number;
 }
 
 export interface IPagination {
@@ -18,12 +18,15 @@ export interface IPagination {
   pagination?: IPaginationObj;
 }
 
-export interface Repository<M> extends LooseObject {
-  add: (obj: M) => Promise<any>;
-  findByEmail: (obj: M) => Promise<any>;
-  findById: (obj: M) => Promise<any>;
-  find: (obj: { max: number }) => Promise<any>;
-  updateOne: (query: LooseObject, update: LooseObject) => Promise<any>;
+export type ObjPromiseFunc<T> = (obj: T) => Promise<any>;
+
+export interface Repository<M> {
+  find: (query?: LooseObject, fields?: string | LooseObject) => Promise<M[]>;
+  findOne: (query?: LooseObject, fields?: string | LooseObject) => Promise<M>;
+  create: ObjPromiseFunc<M>;
+  findById: ObjPromiseFunc<M>;
+  update: (query: LooseObject, update: LooseObject) => Promise<M>;
+  updateById: (id: string, update: LooseObject) => Promise<M>;
 }
 
 export interface HttpRequest {

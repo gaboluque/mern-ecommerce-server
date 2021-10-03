@@ -23,14 +23,14 @@ export interface IUser {
   id: string;
   name: string;
   email: string;
-  password: string;
+  password?: string;
   role: UserRole;
   address: IUserAddress;
 }
 
 export interface IUserDTO {
   _id?: string;
-  id?: string;
+  id?: string | number;
   name?: string;
   email?: string;
   password?: string;

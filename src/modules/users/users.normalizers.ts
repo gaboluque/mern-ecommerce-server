@@ -6,5 +6,6 @@ export const userNormalizer = (user: IUser): IUser => {
     ...user,
     email: user.email.toLowerCase(),
     name: startCase(user.name),
+    password: undefined,
   };
 };

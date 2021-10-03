@@ -1,18 +1,26 @@
-import { HttpRequest, HttpResponse, Repository, RouteController } from "../../lib/commonTypes";
+import { HttpRequest, Repository, RouteController } from "../../lib/commonTypes";
 import { IUser } from "./users.types";
 
 export const makeUsersController = (repo: Repository<IUser>): RouteController => {
-  const getUsers = async (httpRequest: HttpRequest): Promise<HttpResponse> => {
-    const { id } = httpRequest.pathParams || {};
-    const { max, before, after } = httpRequest.queryParams || {};
-
-    const result = id ? await repo.findById(id) : await repo.getItems({ max, before, after });
+  const indexUsers = async () => {
+    const result = await repo.find();
     return {
       data: result,
     };
   };
 
+  const createUser = async (httpRequest: HttpRequest) => {
+    console.log(httpRequest);
+
+    const newUser = await repo.create(httpRequest.body as IUser);
+
+    console.log(newUser);
+
+    return { data: newUser };
+  };
+
   return {
-    getUsers,
+    indexUsers,
+    createUser,
   };
 };

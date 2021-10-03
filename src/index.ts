@@ -1,14 +1,11 @@
-import cors from "cors";
-import express from "express";
-import helmet from "helmet";
-import { userRouter } from "./modules/users/users.router";
+import { app } from "./app";
+import { serverConf } from "./config";
+import { connectDB } from "./db";
 
-const app = express();
-app.use(express.json({ limit: "1mb" }));
-app.use(helmet());
-app.use(cors());
-app.options("*", cors);
+// Connect to database
+connectDB();
 
-app.use("/users", userRouter);
-
-app.listen(9090, () => console.log(`Listening on port 9090`));
+// Start server listening
+app.listen(Number(serverConf.port), "0.0.0.0", (): void => {
+  console.log("Server running on port", serverConf.port);
+});
