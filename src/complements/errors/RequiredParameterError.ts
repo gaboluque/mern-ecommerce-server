@@ -1,10 +1,9 @@
-export default class RequiredParameterError extends Error {
-  constructor(param: string) {
-    super(`${param} can not be null or undefined.`);
+import SuperError from "./SuperError";
 
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, RequiredParameterError);
-    }
+export default class RequiredParameterError extends SuperError {
+  constructor(param: string) {
+    super(`${param} is required`, 400);
+    this.name = "RequiredParameterError";
   }
 }
 

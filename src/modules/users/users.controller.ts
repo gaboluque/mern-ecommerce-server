@@ -1,22 +1,16 @@
 import { HttpRequest, Repository, RouteController } from "../../lib/commonTypes";
-import { IUser } from "./users.types";
+import { userCreator } from "./services/userCreator";
+import { IUser, IUserDTO } from "./users.types";
 
 export const makeUsersController = (repo: Repository<IUser>): RouteController => {
   const indexUsers = async () => {
-    const result = await repo.find();
-    return {
-      data: result,
-    };
+    const usersList = await repo.find();
+    return { data: usersList };
   };
 
   const createUser = async (httpRequest: HttpRequest) => {
-    console.log(httpRequest);
-
-    const newUser = await repo.create(httpRequest.body as IUser);
-
-    console.log(newUser);
-
-    return { data: newUser };
+    const newUser = await userCreator(repo)(httpRequest.body as IUserDTO);
+    return { data: newUser, statusCode: 201 };
   };
 
   return {

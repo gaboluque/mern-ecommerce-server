@@ -15,7 +15,7 @@ const userSchemaFields: Record<keyof LeanUser, LooseObject> = {
   password: {
     type: String,
     required: true,
-    minlength: 7,
+    minlength: 6,
     trim: true,
   },
   name: {

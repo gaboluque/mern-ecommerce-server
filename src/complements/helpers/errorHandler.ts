@@ -21,5 +21,5 @@ export const errorHandler = (
 
   logEvent.emit(LOG_EVENTS.ERROR, error);
 
-  res.send(result);
+  res.status(error.statusCode || 500).send(result);
 };

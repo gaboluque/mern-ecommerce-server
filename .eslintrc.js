@@ -27,11 +27,13 @@ module.exports = {
     },
   },
   rules: {
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
     "prettier/prettier": ["error", { printWidth: 100 }],
-    "no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": ["error"],
     "import/prefer-default-export": 0,
     "import/extensions": 0,
+    "@typescript-eslint/ban-ts-comment": 0,
   },
 };

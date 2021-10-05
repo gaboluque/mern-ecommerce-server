@@ -5,21 +5,35 @@ const updateOptions = { new: true, runValidators: true };
 
 export const baseRepo = (model: any, makeObj: any): Repository<any> => ({
   async findById(id: string, projection = {}) {
-    return makeObj(await model.findById(id, projection).lean());
+    const record = await model.findById(id, projection).lean();
+    if (!record) return null;
+
+    return makeObj(record);
   },
   async findOne(filter = {}, projection = {}) {
-    return makeObj(await model.findOne(filter, projection).lean());
+    const record = await model.findOne(filter, projection).lean();
+    if (!record) return null;
+    return makeObj(record);
   },
   async find(filter = {}, projection = {}) {
     return (await model.find(filter, normalizeFields(projection))).map(makeObj);
   },
   async updateById(id: string, update = {}) {
-    return makeObj(await model.findByIdAndUpdate(id, update, updateOptions).lean());
+    const record = await model.findByIdAndUpdate(id, update, updateOptions).lean();
+    if (!record) return null;
+
+    return makeObj(record);
   },
   async update(filter = {}, update = {}) {
-    return makeObj(await model.findOneAndUpdate(filter, update, updateOptions).lean());
+    const record = await model.findOneAndUpdate(filter, update, updateOptions).lean();
+    if (!record) return null;
+
+    return makeObj(record);
   },
   async create(item: any) {
-    return makeObj(await model.create(item));
+    const record = await model.create(item);
+    if (!record) return null;
+
+    return makeObj(record);
   },
 });

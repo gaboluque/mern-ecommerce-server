@@ -1,9 +1,8 @@
-export default class InvalidPropertyError extends Error {
-  constructor(property: string) {
-    super(`Invalid ${property}`);
+import SuperError from "./SuperError";
 
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, InvalidPropertyError);
-    }
+export default class InvalidPropertyError extends SuperError {
+  constructor(property: string) {
+    super(`Invalid ${property}`, 400);
+    this.name = "InvalidPropertyError";
   }
 }
